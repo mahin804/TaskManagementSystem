@@ -18,6 +18,7 @@ namespace TaskManagementSystem.Domain.Models
 
         public DateTime CreatedAt { get; set; }       
 
-        public DateTime? DueDate { get; set; }        
+        public DateTime? DueDate { get; set; }    
+        public string? OwnerUserId { get; set; }
     }
 }

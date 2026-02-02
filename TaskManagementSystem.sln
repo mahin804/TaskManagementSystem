@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.Domain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.Infrastructure", "TaskManagementSystem.Infrastructure\TaskManagementSystem.Infrastructure.csproj", "{5DDC29CF-E299-4AEF-AC2E-7FC74A7D3F93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.Shared", "TaskManagementSystem.Shared\TaskManagementSystem.Shared.csproj", "{2CCAAEEC-0552-4A0D-B155-AA4A7C4A241A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5DDC29CF-E299-4AEF-AC2E-7FC74A7D3F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DDC29CF-E299-4AEF-AC2E-7FC74A7D3F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DDC29CF-E299-4AEF-AC2E-7FC74A7D3F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CCAAEEC-0552-4A0D-B155-AA4A7C4A241A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCAAEEC-0552-4A0D-B155-AA4A7C4A241A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCAAEEC-0552-4A0D-B155-AA4A7C4A241A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCAAEEC-0552-4A0D-B155-AA4A7C4A241A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

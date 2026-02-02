@@ -40,6 +40,25 @@ namespace TaskManagementSystem.Infrastructure.Repostiries
             }
         }
 
+        public async Task<List<TaskItem>> GetTaskByRole(string Name, string Role)
+        {
+            try
+            {
+                if (Role == "Admin")
+                {
+                    return await _appDbContext.Tasks.ToListAsync();
+                }
+                else
+                {
+                    return await _appDbContext.Tasks.Where(x => x.OwnerUserId == Name).ToListAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.InnerException?.Message ?? ex.Message);
+            }
+        }
+
         public async Task<string> UpdateStatus(int id, bool Status)
         {
             try

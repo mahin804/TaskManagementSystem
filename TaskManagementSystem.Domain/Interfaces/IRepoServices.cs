@@ -12,6 +12,7 @@ namespace TaskManagementSystem.Domain.Interfaces
         Task<string> AddTask(TaskItem user);
         Task UpdateTask(TaskItem task);
         Task<TaskItem?> GetTaskById(int id);
+        Task<List<TaskItem>> GetTaskByRole(string Name,string Role);
         Task<string> UpdateStatus(int id, bool Status);
     }
 }

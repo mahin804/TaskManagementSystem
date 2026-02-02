@@ -1,71 +1,42 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TaskManagementSystem.Application.Commands.Task_.TaskCmds;
+using TaskManagementSystem.Application.Commands.User.UserCmd;
+using TaskManagementSystem.Application.Response;
 using TaskManagementSystem.Authoriz;
+using TaskManagementSystem.Domain.Models;
 
 namespace TaskManagementSystem.Controllers
 {
     public class UserController : ControllerBase
     {
-        [HttpPost("login")]
-        public IActionResult Login(string UserName, string Password)
+        private readonly ISender _sender;
+        public UserController(ISender sender)
         {
-            var user = DummyUsers.Users
-                .FirstOrDefault(u =>
-                    u.Username == UserName &&
-                    u.Password == Password);
-
-            if (user == null)
-                return Unauthorized("Invalid credentials");
-
-            //var claims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.Name, user.Username),
-            //    new Claim(ClaimTypes.Role, user.Role)
-            //};
-
-            //// ✅ KEY MUST BE AT LEAST 32 CHARACTERS (256 BITS)
-            //var key = new SymmetricSecurityKey(
-            //    Encoding.UTF8.GetBytes("THIS_IS_A_VERY_LONG_SECRET_KEY_1234567890"));
-
-            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            //var token = new JwtSecurityToken(
-            //    claims: claims,
-            //    expires: DateTime.UtcNow.AddHours(1),
-            //    signingCredentials: creds
-            //);
-
-            //return Ok(new
-            //{
-            //    token = new JwtSecurityTokenHandler().WriteToken(token)
-            //});
-
-            var token = GenerateJwtToken("THIS_IS_A_VERY_LONG_SECRET_KEY_1234567890",user.Username,user.Role);
-            return Ok(token);
+            _sender = sender;
         }
-
-        private string GenerateJwtToken(string key,string username, string role = "User", int expmin = 20)
+        [HttpPost("login")]
+        public async Task<IApiResponse> Login([FromBody] UserLoginCmd UserLogin)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
+            try
             {
-             new Claim(ClaimTypes.NameIdentifier, username),
-             new Claim(ClaimTypes.Role, role),
-            };
-                
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(expmin),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                var res = await _sender.Send(UserLogin);
+                return res;
+            }
+            catch(Exception ex)
+            {
+                return new FetchApiExeResult<TaskItem>
+                {
+                    ResultType = ResultType.Error,
+                    Message = ex.InnerException?.Message ?? ex.Message,
+                    Result = null
+                };
+            }
         }
     }
 }
